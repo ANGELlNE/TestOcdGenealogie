@@ -23,26 +23,26 @@ Lorsqu'un utilisateur propose une modification (par exemple, ajouter une relatio
 
 ```sql
 INSERT INTO modification_proposals (user_id, target_type, target_id, proposal_description, status, created_at)
-VALUES (rose03.id, 'relation', 123, 'Ajout relation parent-enfant entre Jean PERRET et Rose PERRET', 'pending', NOW());
+VALUES (rose03.id, 'relation', 123, 'Ajout relation parent-enfant entre Jean PERRET et Rose PERRET', 'en attente', NOW());
 ```
 
 Les utilisateurs votent pour accepter ou rejeter la proposition. Chaque vote est enregistré dans la table modification_approvals :
 
 ```sql
 INSERT INTO modification_approvals (modification_proposal_id, user_id, vote, created_at)
-VALUES (123, jean01.id, 'accepted', NOW());
+VALUES (123, jean01.id, 'accepté', NOW());
 ```
 
 Si 3 utilisateurs acceptent la proposition, elle est validée et son statut passe à accepted :
 
 ```sql
-UPDATE modification_proposals SET status = 'accepted' WHERE id = 123;
+UPDATE modification_proposals SET status = 'accepté' WHERE id = 123;
 ```
 
 Si 3 utilisateurs rejettent la proposition, elle est rejetée et son statut passe à rejected :
 
 ```sql
-UPDATE modification_proposals SET status = 'rejected' WHERE id = 123;
+UPDATE modification_proposals SET status = 'rejeté' WHERE id = 123;
 ```
 
 Une fois la proposition validée, la modification est appliquée. Par exemple, si la relation est acceptée, elle est ajoutée dans la table relationships :
@@ -55,5 +55,5 @@ VALUES (rose03.id, jean01.id, rose03.id, NOW());
 Si la proposition est rejetée (3 votes rejetés), aucune modification n'est appliquée et le statut dans modification_proposals est mis à jour à rejected :
 
 ```sql
-UPDATE modification_proposals SET status = 'rejected' WHERE id = 123;
+UPDATE modification_proposals SET status = 'rejeté' WHERE id = 123;
 ```
