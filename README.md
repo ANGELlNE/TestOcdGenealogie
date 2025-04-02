@@ -37,6 +37,7 @@ Si 3 utilisateurs acceptent la proposition, elle est validée et son statut pass
 
 ```sql
 UPDATE modification_proposals SET status = 'accepted' WHERE id = 123;
+```
 
 Si 3 utilisateurs rejettent la proposition, elle est rejetée et son statut passe à rejected :
 
