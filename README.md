@@ -24,12 +24,14 @@ Lorsqu'un utilisateur propose une modification (par exemple, ajouter une relatio
 ```sql
 INSERT INTO modification_proposals (user_id, target_type, target_id, proposal_description, status, created_at)
 VALUES (rose03.id, 'relation', 123, 'Ajout relation parent-enfant entre Jean PERRET et Rose PERRET', 'pending', NOW());
+```
 
 Les utilisateurs votent pour accepter ou rejeter la proposition. Chaque vote est enregistré dans la table modification_approvals :
 
 ```sql
 INSERT INTO modification_approvals (modification_proposal_id, user_id, vote, created_at)
 VALUES (123, jean01.id, 'accepted', NOW());
+```
 
 Si 3 utilisateurs acceptent la proposition, elle est validée et son statut passe à accepted :
 
@@ -40,14 +42,17 @@ Si 3 utilisateurs rejettent la proposition, elle est rejetée et son statut pass
 
 ```sql
 UPDATE modification_proposals SET status = 'rejected' WHERE id = 123;
+```
 
 Une fois la proposition validée, la modification est appliquée. Par exemple, si la relation est acceptée, elle est ajoutée dans la table relationships :
 
 ```sql
 INSERT INTO relationships (created_by, parent_id, child_id, created_at)
 VALUES (rose03.id, jean01.id, rose03.id, NOW());
+```
 
 Si la proposition est rejetée (3 votes rejetés), aucune modification n'est appliquée et le statut dans modification_proposals est mis à jour à rejected :
 
 ```sql
 UPDATE modification_proposals SET status = 'rejected' WHERE id = 123;
+```
