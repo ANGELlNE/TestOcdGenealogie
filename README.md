@@ -33,13 +33,13 @@ INSERT INTO modification_approvals (modification_proposal_id, user_id, vote, cre
 VALUES (123, jean01.id, 'accepté', NOW());
 ```
 
-Si 3 utilisateurs acceptent la proposition, elle est validée et son statut passe à accepted :
+Si 3 utilisateurs acceptent la proposition, elle est validée et son statut passe à accepté :
 
 ```sql
 UPDATE modification_proposals SET status = 'accepté' WHERE id = 123;
 ```
 
-Si 3 utilisateurs rejettent la proposition, elle est rejetée et son statut passe à rejected :
+Si 3 utilisateurs rejettent la proposition, elle est rejetée et son statut passe à rejeté :
 
 ```sql
 UPDATE modification_proposals SET status = 'rejeté' WHERE id = 123;
@@ -52,7 +52,7 @@ INSERT INTO relationships (created_by, parent_id, child_id, created_at)
 VALUES (rose03.id, jean01.id, rose03.id, NOW());
 ```
 
-Si la proposition est rejetée (3 votes rejetés), aucune modification n'est appliquée et le statut dans modification_proposals est mis à jour à rejected :
+Si la proposition est rejetée (3 votes rejetés), aucune modification n'est appliquée et le statut dans modification_proposals est mis à jour à rejeté :
 
 ```sql
 UPDATE modification_proposals SET status = 'rejeté' WHERE id = 123;
